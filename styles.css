@@ -477,6 +477,74 @@ img {
     resize: vertical;
 }
 
+/* Delivery Toggle */
+.delivery-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.delivery-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.delivery-card {
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.delivery-card svg {
+    width: 28px;
+    height: 28px;
+    margin: 0 auto 8px;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.delivery-card strong {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.delivery-card span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.delivery-card:hover {
+    border-color: var(--primary-light);
+    background: rgba(26,35,126,0.02);
+}
+
+.delivery-option input[type="radio"]:checked + .delivery-card {
+    border-color: var(--primary);
+    background: rgba(26,35,126,0.04);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+.delivery-option input[type="radio"]:checked + .delivery-card svg {
+    color: var(--primary);
+}
+
+.btn-email {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.btn-email:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-light);
+    color: white;
+}
+
 /* File Upload */
 .file-upload-area {
     border: 2px dashed var(--border);
