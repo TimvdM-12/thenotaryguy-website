@@ -659,6 +659,33 @@ img {
     line-height: 1.5;
 }
 
+/* Form Success */
+.form-success {
+    background: white;
+    border: 2px solid var(--success);
+    border-radius: var(--radius-lg);
+    padding: 48px 36px;
+    text-align: center;
+}
+
+.form-success svg {
+    width: 56px;
+    height: 56px;
+    color: var(--success);
+    margin: 0 auto 16px;
+}
+
+.form-success h3 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.form-success p {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
 /* Upload Sidebar */
 .sidebar-card {
     background: white;
