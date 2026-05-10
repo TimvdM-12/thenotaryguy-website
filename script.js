@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
                     '<span>' + file.name + ' (' + size + ')</span>' +
                 '</div>' +
-                '<button class="file-item-remove" data-index="' + index + '">&times;</button>';
+                '<button type="button" class="file-item-remove" data-index="' + index + '">&times;</button>';
             fileList.appendChild(item);
         });
 
@@ -119,8 +119,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    uploadForm.addEventListener('submit', function (e) {
+    function openWhatsApp(msg) {
+        var url = 'https://wa.me/27767877637?text=' + encodeURIComponent(msg);
+        window.location.href = url;
+    }
+
+    function openEmail(to, subject, body) {
+        var url = 'mailto:' + to
+            + '?subject=' + encodeURIComponent(subject)
+            + '&body=' + encodeURIComponent(body);
+        window.location.href = url;
+    }
+
+    submitBtn.addEventListener('click', function (e) {
         e.preventDefault();
+        e.stopPropagation();
 
         var name = document.getElementById('fullName').value.trim();
         var whatsapp = document.getElementById('whatsappNumber').value.trim();
@@ -129,8 +142,19 @@ document.addEventListener('DOMContentLoaded', function () {
         var message = document.getElementById('message').value.trim();
         var method = getDeliveryMethod();
 
-        if (!name || !whatsapp || !service) {
-            alert('Please fill in all required fields.');
+        if (!name) {
+            alert('Please enter your full name.');
+            document.getElementById('fullName').focus();
+            return;
+        }
+        if (!whatsapp) {
+            alert('Please enter your WhatsApp number.');
+            document.getElementById('whatsappNumber').focus();
+            return;
+        }
+        if (!service) {
+            alert('Please select a service.');
+            document.getElementById('serviceType').focus();
             return;
         }
 
@@ -148,10 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
             body += '\nPlease find my scanned documents attached to this email for inspection.\n';
             body += 'Please contact me on WhatsApp (' + whatsapp + ') with next steps.\n';
 
-            var mailto = 'mailto:info@thenotaryguy.co.za'
-                + '?subject=' + encodeURIComponent(subject)
-                + '&body=' + encodeURIComponent(body);
-            window.location.href = mailto;
+            openEmail('info@thenotaryguy.co.za', subject, body);
         } else {
             var whatsappMsg = 'Hi, I\'d like to use your notary services.\n\n';
             whatsappMsg += '*Name:* ' + name + '\n';
@@ -162,15 +183,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (message) whatsappMsg += '*Details:* ' + message + '\n';
             whatsappMsg += '\nI have ' + (selectedFiles.length || 'no') + ' document(s) ready to send for inspection.';
 
-            var encoded = encodeURIComponent(whatsappMsg);
-            var link = document.createElement('a');
-            link.href = 'https://wa.me/27767877637?text=' + encoded;
-            link.target = '_blank';
-            link.rel = 'noopener';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            openWhatsApp(whatsappMsg);
         }
+    });
+
+    uploadForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitBtn.click();
     });
 
     contactForm.addEventListener('submit', function (e) {
@@ -193,14 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (email) whatsappMsg += '*Email:* ' + email + '\n';
         whatsappMsg += '*Message:* ' + message;
 
-        var encoded = encodeURIComponent(whatsappMsg);
-        var link = document.createElement('a');
-        link.href = 'https://wa.me/27767877637?text=' + encoded;
-        link.target = '_blank';
-        link.rel = 'noopener';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        openWhatsApp(whatsappMsg);
     });
 
     var observer = new IntersectionObserver(function (entries) {
