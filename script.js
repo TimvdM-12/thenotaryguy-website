@@ -163,7 +163,13 @@ document.addEventListener('DOMContentLoaded', function () {
             whatsappMsg += '\nI have ' + (selectedFiles.length || 'no') + ' document(s) ready to send for inspection.';
 
             var encoded = encodeURIComponent(whatsappMsg);
-            window.open('https://wa.me/27767877637?text=' + encoded, '_blank');
+            var link = document.createElement('a');
+            link.href = 'https://wa.me/27767877637?text=' + encoded;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     });
 
@@ -188,7 +194,13 @@ document.addEventListener('DOMContentLoaded', function () {
         whatsappMsg += '*Message:* ' + message;
 
         var encoded = encodeURIComponent(whatsappMsg);
-        window.open('https://wa.me/27767877637?text=' + encoded, '_blank');
+        var link = document.createElement('a');
+        link.href = 'https://wa.me/27767877637?text=' + encoded;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
 
     var observer = new IntersectionObserver(function (entries) {
